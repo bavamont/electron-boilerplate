@@ -1,0 +1,17 @@
+{
+  "name": "electron-boilerplate",
+  "version": "0.0.1",
+  "description": "Multilingual Electron boilerplate.",
+  "main": "app/main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "author": "Bavamont",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^4.1.4"
+  },
+  "dependencies": {
+    "fs-extra": "^7.0.1"
+  }
+}
