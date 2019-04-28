@@ -45,13 +45,16 @@ npm run build
 ### Customize
 
 Edit package.json and adjust the information for your application.
+
 Edit app/scripts/settings.js and adjust these settings for your application.
 
 Change the menu by editing app/scripts/menu.js
+
 Language files can be found under app/scripts/languages/
 
 
 ### Update
 
 04/28/2019	0.0.2, Small updates
+
 04/16/2019	0.0.1, Initial release
