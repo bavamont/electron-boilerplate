@@ -7,9 +7,11 @@
 
 const electron = require("electron");
 const {app, BrowserWindow, Menu, ipcMain} = electron;
+const {autoUpdater} = require("electron-updater");
 const url = require("url");
 const path = require("path");
 const settings = new(require("./scripts/settings.js"));
+const i18n = new(require("./scripts/i18n.js"));
 let mainWindow = null;
 
 /**
@@ -35,35 +37,44 @@ if (process.platform === "linux") {
  * Creates the main window
  */
 function createMainWindow() {
-	/* Define main window. */
-	mainWindow = new BrowserWindow({
-		width: 800,
-		height: 600,
-		titleBarStyle: "hidden",
-		useContentSize: true,
-		resizable: false,
-        show: false,
-        backgroundColor: '#FFF',
-        webPreferences: {
-        	nodeIntegration: true
-        }
-  	});
+
+    /**
+     * Check for updates.
+     */
+    if (process.env.NODE_ENV === "production") { 
+        autoUpdater.checkForUpdates();
+    }
+
+    /* Define main window. */
+    mainWindow = new BrowserWindow({
+      width: 800,
+      height: 600,
+      titleBarStyle: "hidden",
+      useContentSize: false,
+        resizable: false,
+      show: false,
+      backgroundColor: "#1a6288",
+      webPreferences: {
+        nodeIntegration: true
+      },
+      icon: path.join(__dirname, "assets", "app", "icons", "64x64.png")
+    });
     mainWindow.loadURL(url.format({
         pathname: path.join(__dirname, "main.html"),
         protocol: "file",
         slashes: true
     }));
-    mainWindow.on('ready-to-show', function() {
+    mainWindow.on("ready-to-show", function() {
         mainWindow.show();
         mainWindow.focus();
     });
     /* Event triggered when mainWindow is closed. */
-	mainWindow.on("closed", () => {
-		mainWindow = null;
-	});
-    const mainMenu = require("./scripts/menu.js");
-    Menu.setApplicationMenu(mainMenu);
-    mainWindow.setMenu(mainMenu);
+    mainWindow.on("closed", () => {
+        mainWindow = null;
+    });
+  const mainMenu = require("./scripts/menu.js");
+  Menu.setApplicationMenu(mainMenu);
+  mainWindow.setMenu(mainMenu);
 }
 
 /**
@@ -91,7 +102,23 @@ app.on("window-all-closed", () => {
  * Emitted when the application is activated (macOS).
  */
 app.on("activate", () => {
-	if (mainWindow === null) {
-		createMainWindow();
-	}
+    if (mainWindow === null) {
+        createMainWindow();
+    }
 })
+
+/**
+ * Update has been downloaded.
+ */
+autoUpdater.on("update-downloaded", () => {
+  if (process.env.NODE_ENV === "production") { 
+    dialog.showMessageBox({
+      type: "info",
+      title: i18n.__("Update available"),
+      message: i18n.__("Do you want to update now?"),
+      buttons: [i18n.__("Yes"), i18n.__("No")]
+    }, (index) => {
+      if (!index) autoUpdater.quitAndInstall(); 
+    });
+  }
+});

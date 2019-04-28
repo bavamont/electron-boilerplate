@@ -22,15 +22,16 @@ const defaults = {
  * Do not change anything below this line.
  */
 const electron = require("electron");
-const path = require('path');
+const path = require("path");
 const fse = require("fs-extra");
+const keytar = require("keytar");
 let app = electron.app ? electron.app : electron.remote.app;
 
 class Settings {
 
   	constructor() {
-  		const userDataPath = app.getPath('userData');
-  		this.path = path.join(userDataPath, 'settings.json');
+  		const userDataPath = app.getPath("userData");
+  		this.path = path.join(userDataPath, "settings.json");
   		this.data = defaults;
   		if (fse.existsSync(this.path)) {
 	    	const data = fse.readJsonSync(this.path);
@@ -61,5 +62,22 @@ class Settings {
   		this.data[key] = val;
   		fse.writeJsonSync(this.path, this.data);
   	}
+
+	/**
+	 * Returns the value of key (saved encrypted)
+	 *
+	 * @return
+	 *   The value of key
+	 */
+  	getEncrypt(key) {
+  		return keytar.getPassword(this.get("appName"), key);
+  	}
+
+	/**
+	 * Sets and saves a value (saved encrypted)
+	 */
+  	setEncrypt(key, val) {
+		keytar.setPassword(this.get("appName"), key, val);
+  	}  	
 }
 module.exports = Settings;

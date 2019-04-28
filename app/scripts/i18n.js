@@ -13,20 +13,18 @@ const fse = require("fs-extra");
 const settings = new(require("./settings.js"));
 let app = electron.app ? electron.app : electron.remote.app;
 let loadedLanguage = undefined;
-var slash = "/";
-if (process.platform == "win32") slash = "\\";
 
 class i18n {
     constructor() {
-        if (fse.existsSync(path.join(__dirname, "languages" + slash + settings.get("lang") + ".js"))) {
-            loadedLanguage = JSON.parse(fse.readFileSync(path.join(__dirname, "languages" + slash + settings.get("lang")  + ".js")), "utf8");
+        if (fse.existsSync(path.join(__dirname, "languages", settings.get("lang") + ".js"))) {
+            loadedLanguage = JSON.parse(fse.readFileSync(path.join(__dirname, "languages", settings.get("lang")  + ".js")), "utf8");
         } 
-        else if (fse.existsSync(path.join(__dirname, "languages" + slash + app.getLocale() + ".js"))) {
+        else if (fse.existsSync(path.join(__dirname, "languages", app.getLocale() + ".js"))) {
             settings.set("lang", app.getLocale());
-            loadedLanguage = JSON.parse(fse.readFileSync(path.join(__dirname, "languages" + slash + app.getLocale() + ".js")), "utf8");
+            loadedLanguage = JSON.parse(fse.readFileSync(path.join(__dirname, "languages", app.getLocale() + ".js")), "utf8");
         }
         else {
-            loadedLanguage = JSON.parse(fse.readFileSync(path.join(__dirname, "languages" + slash + settings.get("defaultLang") + ".js")), "utf8");
+            loadedLanguage = JSON.parse(fse.readFileSync(path.join(__dirname, "languages", settings.get("defaultLang") + ".js")), "utf8");
         }
     }
 
@@ -38,8 +36,8 @@ class i18n {
      */
     getLanguages() {
         const languages = [];
-        fs.readdirSync(path.join(__dirname, "languages" + slash)).forEach(languageFile => {
-            var currentLanguage = JSON.parse(fse.readFileSync(path.join(__dirname, "languages" + slash + languageFile)), "utf8");
+        fs.readdirSync(path.join(__dirname, "languages")).forEach(languageFile => {
+            var currentLanguage = JSON.parse(fse.readFileSync(path.join(__dirname, "languages", languageFile)), "utf8");
             languages.push({
                 Language : currentLanguage.Language,
                 Iso6391 : currentLanguage.Iso6391
@@ -72,7 +70,7 @@ class i18n {
      *   Language to load (Iso 6391)
      */
     set(lang) {
-        if (fse.existsSync(path.join(__dirname, "languages" + slash + lang + ".js"))) {
+        if (fse.existsSync(path.join(__dirname, "languages", lang + ".js"))) {
             settings.set("lang", lang);
             app.relaunch();
             app.exit();
