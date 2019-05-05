@@ -7,13 +7,13 @@
     "email": "",
     "url": ""
   },
-  "homepage": "https://github.com/",
-  "description": "Multilingual Electron boilerplate.",
+  "homepage": "https://github.com/bavamont/electron-boilerplate",
+  "description": "Electron Boilerplate description.",
   "keywords": [
-    "timelapse",
-    "webcam"
+    "electron",
+    "boilerplate"
   ],
-  "repository": "https://github.com/",
+  "repository": "https://github.com/bavamont/electron-boilerplate",
   "license": "MIT",
   "main": "app/main.js",
   "scripts": {
@@ -23,16 +23,16 @@
     "ship": "build --win -p always"
   },
   "build": {
-    "productName": "Multilingual Electron boilerplate.",
-    "appId": "com.domain.productname",
+    "productName": "Electron Boilerplate",
+    "appId": "com.bavamont.electronboilerplate",
     "directories": {
       "output": "build"
     },
     "publish": [
       {
         "provider": "github",
-        "owner": "",
-        "repo": "",
+        "owner": "bavamont",
+        "repo": "electron-boilerplate",
         "private": false
       }
     ],
@@ -73,13 +73,13 @@
     }
   },
   "devDependencies": {
-    "electron": "^4.1.5",
+    "electron": "^4.2.0",
     "electron-builder": "^20.40.2",
     "electron-rebuild": "^1.8.4"
   },
   "dependencies": {
-    "fs-extra": "^7.0.1",
     "electron-updater": "^4.0.9",
+    "fs-extra": "^7.0.1",
     "keytar": "^4.4.1"
   }
 }

@@ -1,18 +1,20 @@
 /**
- * Electron boilerplate
+ * Electron Boilerplate
  * 
  * @author Bavamont
  * @link https://github.com/bavamont
  */
 
 const electron = require("electron");
-const {app, BrowserWindow, Menu, ipcMain} = electron;
+const {app, BrowserWindow, Menu, ipcMain, Tray} = electron;
 const {autoUpdater} = require("electron-updater");
 const url = require("url");
 const path = require("path");
 const settings = new(require("./scripts/settings.js"));
 const i18n = new(require("./scripts/i18n.js"));
-let mainWindow = null;
+var mainWindow = null;
+var exeDirectory = app.getAppPath();
+var showFrame = false;
 
 /**
  * Set environment variable NODE_ENV
@@ -45,36 +47,55 @@ function createMainWindow() {
         autoUpdater.checkForUpdates();
     }
 
+    /**
+     * Added for notifications during development.
+     * https://electronjs.org/docs/tutorial/notifications#windows
+     */
+    if (process.env.NODE_ENV === "development") { 
+      app.setAppUserModelId(process.execPath);
+      showFrame = true;
+    }
+
     /* Define main window. */
     mainWindow = new BrowserWindow({
+      backgroundColor: "#FFF",
       width: 800,
       height: 600,
-      titleBarStyle: "hidden",
-      useContentSize: false,
-        resizable: false,
+      minWidth: 800,
+      minHeight: 600,
+      transparent: false,
+      frame: showFrame,
+      resizable: false,
       show: false,
-      backgroundColor: "#1a6288",
       webPreferences: {
-        nodeIntegration: true
+        nodeIntegration: false,
+        nodeIntegrationInWorker: false,
+        preload: path.join(__dirname, 'preload.js')
       },
       icon: path.join(__dirname, "assets", "app", "icons", "64x64.png")
     });
     mainWindow.loadURL(url.format({
-        pathname: path.join(__dirname, "main.html"),
+        pathname: path.join(__dirname, "app.html"),
         protocol: "file",
         slashes: true
     }));
     mainWindow.on("ready-to-show", function() {
         mainWindow.show();
         mainWindow.focus();
+        mainWindow.webContents.send("set-version", app.getVersion());
     });
     /* Event triggered when mainWindow is closed. */
     mainWindow.on("closed", () => {
         mainWindow = null;
     });
-  const mainMenu = require("./scripts/menu.js");
-  Menu.setApplicationMenu(mainMenu);
-  mainWindow.setMenu(mainMenu);
+    var trayIcon = new Tray(path.join(__dirname, "assets", "app", "icon.png"));
+    if (process.env.NODE_ENV === "production") { 
+      mainWindow.setMenu(null);    
+    } else {
+      const mainMenu = require("./scripts/menu.js");
+      Menu.setApplicationMenu(mainMenu);
+      mainWindow.setMenu(mainMenu);
+    }
 }
 
 /**
@@ -121,4 +142,26 @@ autoUpdater.on("update-downloaded", () => {
       if (!index) autoUpdater.quitAndInstall(); 
     });
   }
+});
+
+/**
+ * Toggle maximize window
+ */
+ipcMain.on('maximize-window', function(event, arg) {
+  if (mainWindow.isMaximized()) mainWindow.unmaximize();
+  else mainWindow.maximize();    
+});
+
+/**
+ * Minimize window
+ */
+ipcMain.on('minimize-window', function(event, arg) {
+  mainWindow.minimize();    
+});
+
+/**
+ * Clsoe window
+ */
+ipcMain.on('close-window', function(event, arg) {
+  mainWindow.close();    
 });

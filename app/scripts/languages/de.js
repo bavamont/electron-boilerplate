@@ -6,10 +6,12 @@
   "Developer Tools": "Entwicklerwerkzeuge",
   "Toggle DevTools": "Entwwzg. Ein/Ausschalten",
   "Reload": "Neu laden",
-  "Hello world!": "Hallo Welt!",
-  "Welcome to this multilingual Electron boilerplate.": "Willkommen zur mehrsprachigen Electron Boilerplate.",
   "Update available": "Update verfügbar",
   "Do you want to update now?": "Möchten Sie jetzt ein Update durchführen?",
   "Yes": "Ja",
-  "No": "Nein"  
+  "No": "Nein",
+  "Loading...": "Wird geladen...",
+  "Electron Boilerplate started.": "Electron Boilerplate gestartet.",
+  "Electron Boilerplate": "Electron Boilerplate",
+  "Exit": "Beenden"
 }

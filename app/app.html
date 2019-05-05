@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title id="appTitle">Electron Boilerplate</title>
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/app/style.css">
+    <link rel="stylesheet" href="assets/material-icons/material-design-icons.css">
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-sm navbar-dark bg-dark py-0 hidden" id="navbar">
+      <div class="row">
+        <div class="col-10">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+              <img src="assets/app/icon.svg" style="padding-top: 6px; padding-right: 5px; height: 22px; width: 22px;">
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#" id="showAppView">Electron Boilerplate</a>
+            </li>   
+            <li class="nav-item">
+              <a class="nav-link" href="#" id="exitView">Exit</a>
+            </li>
+          </ul>
+        </div>
+        <div class="col-2">
+          <ul class="navbar-nav float-right">
+            <li class="nav-item">
+              <a class="nav-link nav-link-window nav-minimize" href="#" id="minimizeWindow"><i class="material-icons md-light md-14" title="Minimize">minimize</i></a>
+            </li>
+            <li class="nav-item hidden">
+              <a class="nav-link nav-link-window nav-maximize" href="#" id="maximizeWindow"><i class="material-icons md-light md-14" title="Maximize">crop_din</i></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link nav-link-window nav-close" href="#" id="closeWindow"><i class="material-icons md-light md-14" title="Close">close</i></a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <div id="splashScreen">
+      <div class="row h-100">
+        <div class="col text-center my-auto">
+          <img src="assets/app/bavamont.svg" width="250"><br>
+          <p class="mt-5"><strong id="loading">Loading...</strong></p>
+          <p class="mt-5">
+            Copyright &copy; Bavamont<br>
+            All rights reserved.
+          </p>
+        </div>
+      </div>
+    </div>
+    <main id="main" role="main" class="hidden">
+      <div class="container-fluid">
+        <div class="row justify-content-center" style="padding-top: 20px;">
+          <!-- App -->
+          <div class="col hidden" id="appView">
+            <div class="row">
+              <div class="col text-center">
+                Electron Boilerplate App
+              </div>              
+            </div>
+          </div>
+          <!-- Next view -->
+        </div>
+      </div>
+    </main>
+    <footer class="footer hidden">
+      <div class="container">
+        <div class="col text-center" id="console">
+          &nbsp;
+        </div>
+      </div>
+    </footer>    
+    <script src="assets/jquery/jquery-3.4.0.js"></script>
+    <script src="assets/bootstrap/js/bootstrap.bundle.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>

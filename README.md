@@ -12,8 +12,11 @@ repository to see the boilerplate app in action:
 
 ```
 git clone https://github.com/bavamont/electron-boilerplate
+
 cd electron-boilerplate
+
 npm install
+
 npm start
 ```
 
@@ -21,8 +24,12 @@ npm start
 ### Features
 
 - multilingual
-- save and load user settings
-- bootstrap
+
+- save and load user settings (with or without encryption)
+
+- starting template
+
+- bootstrap and jquery
 
 
 ### Usage
@@ -55,6 +62,8 @@ Language files can be found under app/scripts/languages/
 
 ### Update
 
-04/28/2019	0.0.2, Small updates
+05/05/2019	Restructuring and added starting template
 
-04/16/2019	0.0.1, Initial release
+04/28/2019	Small updates
+
+04/16/2019	Initial release

@@ -12,7 +12,7 @@ const defaults = {
 	appName			: "Electron Boilerplate",
 	appMode			: "development", // production
 	defaultLang		: "en",
-	lang 			: ''
+	lang 			: "",
 	/**
 	 * Add more settings for your application here.
 	 */
